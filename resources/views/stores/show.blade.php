@@ -47,11 +47,6 @@
 
         @auth
             <a class="btn" href="{{ route('reservation.create', ['store_id' => $store->id])}}">予約する</a>
-            {{-- <form method="POST" action="{{ route('reservation.store') }}">
-                @csrf
-                <input type="hidden" name="store_id" value="{{ $store->id }}">
-                <button type="submit" class="btn btn-primary">予約する</button>
-            </form> --}}
 
             @php
                 $isFavorited = \App\Models\Favorite::where('user_id', Auth::id())->where('store_id', $store->id)->exists();

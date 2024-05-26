@@ -10,6 +10,7 @@ use App\Models\Reservation;
 
 class ReservationController extends Controller
 {
+
     public function create($store_id)
     {
         return view('reservation.create', ['store_id' => $store_id]);
@@ -19,15 +20,28 @@ class ReservationController extends Controller
     {
 
         $request->validate([
-            'reservation_date' => 'required',
-            'number_pf_people' => 'required',
+            'reservation_date' => 'required|date',
+            'number_of_people' => 'required|integer|min:1',
             'store_id' => 'required|integer',
         ]);
+
+        $isoDateTime = "2024-05-29T22:37";
+        // "T"で日付と時刻を分割し、日付と時刻を別々の変数に格納する
+        list(
+            $date, $time
+        ) = explode("T", $isoDateTime);
+        // MySQLの日付の形式に変換する
+        $mysqlDate = $date;
+        // MySQLの時刻の形式に変換する
+        $mysqlTime = substr($time, 0, 5) . ":00"; // 秒の部分は"00"にする
+        // // MySQLの日付と時刻の形式に変換した値を出力する
+        // echo "MySQL Date: $mysqlDate\n";
+        // echo "MySQL Time: $mysqlTime\n";
 
         $reservation = new Reservation();
         $reservation->user_id = Auth::id();
         $reservation->store_id = $request->input('store_id');
-        $reservation->reservation_date = $request->input('reseravtion_date');
+        $reservation->reservation_date = $mysqlDate . " " . $mysqlTime;
         $reservation->number_of_people = $request->input('number_of_people');
         $reservation->status = 'tentative'; //仮予約というステータス
         $reservation->save();
