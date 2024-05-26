@@ -29,6 +29,9 @@
                     <a href="{{route('mypage.favorite') }}">
                         お気に入り
                     </a>
+                    <a href="{{route('reservation.index') }}">
+                        予約履歴
+                    </a>
                     {{-- <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }}

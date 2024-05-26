@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div>
-  <h1>マイページ</h1>
+<div class="container">
+  <h2>マイページ</h2>
 
   <hr>
 
@@ -12,7 +12,7 @@
 
   <a href="{{route('mypage.favorite')}}">お気に入りリスト確認</a>
 
-  <a href="{{route('mypage')}}">注文履歴の確認</a>
+  <a href="{{route('reservation.index')}}">予約履歴の確認</a>
 
   <div class="">
       <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
