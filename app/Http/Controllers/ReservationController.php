@@ -18,6 +18,13 @@ class ReservationController extends Controller
         return view('reservation.index', compact('reservations'));
     }
 
+    public function show($id)
+    {
+        $reservation = Reservation::with('store')->findOrFail($id);
+
+        return view('reservation.show', compact('reservation'));
+    }
+
     public function create($store_id)
     {
         return view('reservation.create', ['store_id' => $store_id]);

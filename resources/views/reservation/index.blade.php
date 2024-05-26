@@ -19,6 +19,11 @@
                       <div>
                           <h5>{{ $reservation->store->name }}</h5>
                           <h6>{{ $reservation->store->description }}</h6>
+                          <p>{{ $reservation->reservation_date }}</p>
+                          <p>{{ $reservation->number_of_people }}</p>
+                          <a href="{{ route('reservation.show', $reservation->id )}}">
+                            予約の詳細を確認する
+                          </a>
                       </div>
                   </div>
                 </div>
