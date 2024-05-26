@@ -15,7 +15,7 @@ class FavoriteController extends Controller
         $user = Auth::user();
         $favorites = Favorite::where('user_id', $user->id)->with('store')->get();
 
-        return view('favorites.index', compact('favorites'));
+        return view('favorite.index', compact('favorites'));
     }
 
     //

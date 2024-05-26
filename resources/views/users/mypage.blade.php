@@ -10,7 +10,7 @@
 
   <a href="{{route('mypage.edit_password')}}">パスワード変更</a>
 
-  <a href="{{route('mypage.favorite')}}">お気に入りリスト確認</a>
+  <a href="{{route('favorite.index')}}">お気に入りリスト確認</a>
 
   <a href="{{route('reservation.index')}}">予約履歴の確認</a>
 

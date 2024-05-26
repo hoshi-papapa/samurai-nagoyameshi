@@ -26,7 +26,7 @@
                     <a href="{{route('mypage') }}">
                         マイページ
                     </a>
-                    <a href="{{route('mypage.favorite') }}">
+                    <a href="{{route('favorite.index') }}">
                         お気に入り
                     </a>
                     <a href="{{route('reservation.index') }}">
