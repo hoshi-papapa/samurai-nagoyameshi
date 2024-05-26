@@ -10,6 +10,13 @@ use App\Models\Reservation;
 
 class ReservationController extends Controller
 {
+    public function index()
+    {
+        $user = Auth::user();
+        $reservations = Reservation::where('user_id', $user->id)->with('store')->get();
+
+        return view('reservation.index', compact('reservations'));
+    }
 
     public function create($store_id)
     {
