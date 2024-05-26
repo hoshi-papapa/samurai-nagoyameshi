@@ -44,7 +44,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Route::post('favorites', [FavoriteController::class, 'store'])->name('favorites.store');
     // Route::delete('favorites/{store}', [FavoriteController::class, 'destroy'])->name('favorites.destroy');
 
-    Route::get('favorite/index', [FavoriteController::class, 'index'])->name('reservation.index');
+    Route::get('favorite/index', [FavoriteController::class, 'index'])->name('favorite.index');
     Route::post('favorite', [FavoriteController::class, 'store'])->name('favorite.store');
     Route::delete('favorite/{store}', [FavoriteController::class, 'destroy'])->name('favorite.destroy');
 

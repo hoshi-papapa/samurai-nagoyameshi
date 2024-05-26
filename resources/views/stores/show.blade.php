@@ -52,13 +52,13 @@
                 $isFavorited = \App\Models\Favorite::where('user_id', Auth::id())->where('store_id', $store->id)->exists();
             @endphp
         @if ($isFavorited)
-            <form method="POST" action="{{ route('favorites.destroy', $store) }}">
+            <form method="POST" action="{{ route('favorite.destroy', $store) }}">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-danger">お気に入り解除</button>
             </form>
         @else
-            <form method="POST" action="{{ route('favorites.store') }}">
+            <form method="POST" action="{{ route('favorite.store') }}">
                 @csrf
                 <input type="hidden" name="store_id" value="{{ $store->id }}">
                 <button type="submit" class="btn btn-primary">お気に入り登録</button>
