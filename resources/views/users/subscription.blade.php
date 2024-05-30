@@ -3,24 +3,31 @@
 @section('content')
 
 <div class="container">
-<div class="py-12">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-            <div class="p-6 bg-white border-b border-gray-200">
-                <h2>サブスクリプション</h2>
-                <form id="setup-form" action="{{ route('subscribe.post') }}" method="POST">
-                    @csrf
-                    <input id="card-holder-name" type="text" placeholder="カード名義人">
-                    <div id="card-element"></div>
-                    <button id="card-button" data-secret="{{ $intent->client_secret }}">
-                        登録
-                    </button>
-                </form>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 bg-white border-b border-gray-200">
+                    <h2>サブスクリプション</h2>
+                    <form id="setup-form" action="{{ route('subscribe.post') }}" method="POST">
+                        @csrf
+                        <input id="card-holder-name" type="text" placeholder="カード名義人">
+                        <div id="card-element"></div>
+                        <button id="card-button" data-secret="{{ $intent->client_secret }}">
+                            登録
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+
+    <h2>サブスクリプションの解約</h2>
+    <form method="POST" action="{{route('subscription.cancel', $user) }}">
+        @csrf
+        <button class="btn btn-success mt-2">キャンセルする</button>
+    </form>
 </div>
-</div>
+
 
 @push('scripts')
 <script src="https://js.stripe.com/v3/"></script>

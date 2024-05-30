@@ -55,6 +55,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('users/mypage/edit', 'edit')->name('mypage.edit');
         Route::put('users/mypage', 'update')->name('mypage.update');
         // Route::get('users/subscription', 'subscription')->name('mypage.subscription');
+        Route::post('users/subscription/cancel/{user}', 'UserContoller@cancelsubscription')->name('subscription.cancel');
         Route::get('users/mypage/password/edit', 'edit_password')->name('mypage.edit_password');
         Route::put('users/mypage/password', 'update_password')->name('mypage.update_password');
     });
@@ -80,5 +81,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 });
+
+Route::get('/basic', function () {
+    return view('basic');
+})->middleware(['auth', 'basic'])->name('basic');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

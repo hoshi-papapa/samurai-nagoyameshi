@@ -90,4 +90,11 @@ class UserController extends Controller
 
         return view('users.subscription', compact('user', 'stripeKey', 'cashierCurrency', 'intent'));
     }
+
+    public function cancelsubscription(User $user, Request $request)
+    {
+        $user = Auth::user();
+        $user->subscription('default')->cancel();
+        return back();
+    }
 }
