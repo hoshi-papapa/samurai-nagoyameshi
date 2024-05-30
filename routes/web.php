@@ -5,6 +5,7 @@ use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -62,6 +63,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 });
+
+Route::get('/subscription', [StripeController::class, 'subscription'])->name('stripe.subscription');
+Route::post('/subscription/afterpay', [StripeController::class, 'afterpay'])->name('stripe.afterpay');
 
 // 不要なAuth::routes()を削除しました
 
