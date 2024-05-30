@@ -22,10 +22,8 @@ class StripeController extends Controller
 
     public function afterpay(Request $request)
     {
-        // ログインユーザーを$userとする
         $user = Auth::user();
 
-        // またStripe顧客でなければ、新規顧客にする
         $stripeCustomer = $user->createOrGetStripeCustomer();
 
         // フォーム送信の情報から$paymentMethodを作成する

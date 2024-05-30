@@ -9,6 +9,7 @@ use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,46 +22,71 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+// 公開ルート
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('/register', 'Auth\RegisterController@register');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// // ダッシュボードルート
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
-require __DIR__ . '/auth.php';
+//ログイン後のページ
+Route::middleware(['auth'])->group(function () {
+    Route::get('/stores', [StoreController::class, 'index'])->name('stores.index');
+});
 
-// メール認証済みかつログイン中のユーザーのみが使用できるルート
+// 認証済み・メール認証済みユーザー向けルート
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::resource('stores', StoreController::class);
-
-    Route::post('reviews', [ReviewController::class, 'store'])->name('reviews.store');
-
-    Route::get('favorite/index', [FavoriteController::class, 'index'])->name('favorite.index');
-    Route::post('favorite', [FavoriteController::class, 'store'])->name('favorite.store');
-    Route::delete('favorite/{store}', [FavoriteController::class, 'destroy'])->name('favorite.destroy');
-
-    Route::get('reservation/index', [ReservationController::class, 'index'])->name('reservation.index');
-    Route::get('reservation/{id}', [ReservationController::class, 'show'])->name('reservation.show');
-    Route::get('reservation/create/{store_id}', [ReservationController::class, 'create'])->name('reservation.create');
-    Route::post('reservation', [ReservationController::class, 'store'])->name('reservation.store');
-
-    Route::controller(UserController::class)->group(function () {
-        Route::get('users/mypage', 'mypage')->name('mypage');
-        Route::get('users/mypage/edit', 'edit')->name('mypage.edit');
-        Route::put('users/mypage', 'update')->name('mypage.update');
-        Route::get('users/mypage/password/edit', 'edit_password')->name('mypage.edit_password');
-        Route::put('users/mypage/password', 'update_password')->name('mypage.update_password');
+    // プロフィール関連ルート
+    Route::prefix('profile')->group(function () {
+        Route::get('/', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
 
+    // ストア関連ルート
+    Route::resource('stores', StoreController::class);
+
+    // レビュー関連ルート
+    Route::post('reviews', [ReviewController::class, 'store'])->name('reviews.store');
+
+    // お気に入り関連ルート
+    Route::prefix('favorite')->group(function () {
+        Route::get('index', [FavoriteController::class, 'index'])->name('favorite.index');
+        Route::post('/', [FavoriteController::class, 'store'])->name('favorite.store');
+        Route::delete('{store}', [FavoriteController::class, 'destroy'])->name('favorite.destroy');
+    });
+
+    // 予約関連ルート
+    Route::prefix('reservation')->group(function () {
+        Route::get('index', [ReservationController::class, 'index'])->name('reservation.index');
+        Route::get('{id}', [ReservationController::class, 'show'])->name('reservation.show');
+        Route::get('create/{store_id}', [ReservationController::class, 'create'])->name('reservation.create');
+        Route::post('/', [ReservationController::class, 'store'])->name('reservation.store');
+    });
+
+    // ユーザー関連ルート
+    Route::prefix('users/mypage')->group(function () {
+        Route::get('/', [UserController::class, 'mypage'])->name('mypage');
+        Route::get('edit', [UserController::class, 'edit'])->name('mypage.edit');
+        Route::put('/', [UserController::class, 'update'])->name('mypage.update');
+        Route::get('subscription', [UserController::class, 'subscription'])->name('mypage.subscription');
+        Route::get('password/edit', [UserController::class, 'edit_password'])->name('mypage.edit_password');
+        Route::put('password', [UserController::class, 'update_password'])->name('mypage.update_password');
+    });
+
+    // Stripeサブスクリプション関連ルート
+    Route::prefix('users/subscription')->group(function () {
+        Route::get('/', [StripeController::class, 'subscription'])->name('stripe.subscription');
+        Route::post('afterpay', [StripeController::class, 'afterpay'])->name('stripe.afterpay');
+    });
+
+    // ログアウトルート
     Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 });
 
