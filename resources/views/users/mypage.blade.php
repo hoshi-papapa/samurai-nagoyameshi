@@ -14,7 +14,7 @@
 
   <a href="{{route('reservation.index')}}">予約履歴の確認</a>
   
-  <a href="{{route('users.subscription')}}">サブスクリプションの登録・解除</a>
+  <a href="{{route('stripe.subscription')}}">サブスクリプションの登録・解除</a>
 
   <div class="">
       <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

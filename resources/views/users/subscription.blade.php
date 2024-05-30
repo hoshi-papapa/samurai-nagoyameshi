@@ -2,47 +2,34 @@
 
 @section('content')
 
-<div class="container">
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    <h2>サブスクリプション</h2>
-                    <form id="setup-form" action="{{ route('subscribe.post') }}" method="POST">
-                        @csrf
-                        <input id="card-holder-name" type="text" placeholder="カード名義人">
-                        <div id="card-element"></div>
-                        <button id="card-button" data-secret="{{ $intent->client_secret }}">
-                            登録
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="container py-3">
+    <h3 class="mb-3">ご登録フォーム</h3>
 
-    <h2>サブスクリプションの解約</h2>
-    <form method="POST" action="{{route('subscription.cancel', $user) }}">
+    {{-- フォーム部分 --}}
+    <form action="{{route('stripe.afterpay')}}" method="post" id="payment-form">
         @csrf
-        <button class="btn btn-success mt-2">キャンセルする</button>
+        
+        <div class="form-group">
+            <label for="card-holder-name">お名前</label>
+            <input type="text" class="form-control col-sm-5" id="card-holder-name" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="card-element">カード番号</label>
+            <div class="form-control col-sm-5" id="card-element"></div>
+        </div>
+
+        <div id="card-errors" role="alert" style='color:red'></div>
+
+        <button class="btn btn-primary" id="card-button" data-secret="{{ $intent->client_secret }}">送信する</button>
     </form>
 </div>
-
 
 @push('scripts')
 <script src="https://js.stripe.com/v3/"></script>
 <script>
-    // Bladeテンプレート内で環境変数を取得
-    var stripeKey = "{{ env('STRIPE_KEY') }}";
-    // var cashierCurrency = "{{ env('CASHIER_CURRENCY') }}";
-
-    // JavaScriptでStripeオブジェクトを作成
-    const stripe = Stripe(stripeKey);
-
-    // コンソールにStripeオブジェクトを表示（デバッグ用）
-    console.log(stripe);
-
-    // Stripe Elementsのセットアップ
+document.addEventListener("DOMContentLoaded", function() {
+    const stripe = Stripe('{{ env('STRIPE_KEY') }}');
     const elements = stripe.elements();
     const cardElement = elements.create('card');
     cardElement.mount('#card-element');
@@ -52,7 +39,8 @@
     const clientSecret = cardButton.dataset.secret;
 
     cardButton.addEventListener('click', async (e) => {
-    e.preventDefault();
+        e.preventDefault();
+
         const { setupIntent, error } = await stripe.confirmCardSetup(
             clientSecret, {
                 payment_method: {
@@ -63,27 +51,20 @@
         );
 
         if (error) {
-            // Display "error.message" to the user...
-            console.log(error);
+            // エラーメッセージを表示
+            document.getElementById('card-errors').textContent = error.message;
         } else {
-            // The card has been verified successfully...
-            stripePaymentIdHandler(setupIntent.payment_method);
+            // setupIntent が成功した場合はフォームを送信
+            const form = document.getElementById('payment-form');
+            const hiddenInput = document.createElement('input');
+            hiddenInput.setAttribute('type', 'hidden');
+            hiddenInput.setAttribute('name', 'setupIntent');
+            hiddenInput.setAttribute('value', setupIntent.id);
+            form.appendChild(hiddenInput);
+            form.submit();
         }
     });
-
-    function stripePaymentIdHandler(paymentMethodId) {
-        // Insert the paymentMethodId into the form so it gets submitted to the server
-        const form = document.getElementById('setup-form');
-
-        const hiddenInput = document.createElement('input');
-        hiddenInput.setAttribute('type', 'hidden');
-        hiddenInput.setAttribute('name', 'paymentMethodId');
-        hiddenInput.setAttribute('value', paymentMethodId);
-        form.appendChild(hiddenInput);
-
-        // Submit the form
-        form.submit();
-    }
+});
 </script>
 @endpush
 
