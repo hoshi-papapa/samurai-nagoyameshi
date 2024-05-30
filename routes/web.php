@@ -8,6 +8,7 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,13 +54,31 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('users/mypage', 'mypage')->name('mypage');
         Route::get('users/mypage/edit', 'edit')->name('mypage.edit');
         Route::put('users/mypage', 'update')->name('mypage.update');
+        // Route::get('users/subscription', 'subscription')->name('mypage.subscription');
         Route::get('users/mypage/password/edit', 'edit_password')->name('mypage.edit_password');
         Route::put('users/mypage/password', 'update_password')->name('mypage.update_password');
     });
 
+    // Route::get('/users/subscription', function () {
+    //     return view('users.subscription');
+    // })->middleware(['auth'])->name('users.subscription');
+
+    Route::get('users/subscription', function () {
+        return view('users.subscription', [
+            'intent' => auth()->user()->createSetupIntent()
+        ]);
+    })->middleware(['auth'])->name('users.subscription');
+
+    Route::post('user/subscribe', function (Request $request) {
+        $request->user()->newSubscription(
+            'default',
+            'price_1PLRM0J13PQX752TO73z20aQ'
+        )->create($request->paymentMethodId);
+
+        return redirect('/users/mypage');
+    })->middleware(['auth'])->name('subscribe.post');
+
     Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 });
-
-// 不要なAuth::routes()を削除しました
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

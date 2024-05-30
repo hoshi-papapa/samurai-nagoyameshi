@@ -81,4 +81,13 @@ class UserController extends Controller
 
         return view('users.favorite', compact('favorite_stores'));
     }
+    public function subscription()
+    {
+        $user = Auth::user();
+        $stripeKey = env('STRIPE_KEY');
+        $cashierCurrency = env('CASHIER_CURRENCY');
+        $intent = $user->createSetupIntent();
+
+        return view('users.subscription', compact('user', 'stripeKey', 'cashierCurrency', 'intent'));
+    }
 }
