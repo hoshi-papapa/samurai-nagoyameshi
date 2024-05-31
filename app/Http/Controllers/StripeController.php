@@ -39,4 +39,11 @@ class StripeController extends Controller
         // 処理後に'ルート設定'にページ移行
         return redirect()->route('mypage');
     }
+
+    public function cancelsubscription(User $user, Request $request)
+    {
+        $user->subscription('default')->cancel();
+        // 処理後に'ルート設定'にページ移行
+        return redirect()->route('mypage');
+    }
 }
