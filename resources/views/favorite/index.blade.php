@@ -13,7 +13,11 @@
               <div class="row">
                 <div class="col-md-4">
                     <a href="{{ route('stores.show', $favorite->store->id) }}">
-                        <img src="{{ asset('img/dummy.png') }}" alt="{{ $favorite->name }}">
+                        @if ($favorite->store->image !== "")
+                            <img src="{{ asset($favorite->store->image) }}"  alt="{{ $favorite->name }}" class="img-thumbnail">
+                        @else
+                            <img src="{{ asset('img/dummy.png')}}"  alt="{{ $favorite->name }}" class="img-thumbnail">
+                        @endif
                     </a>
                     <div>
                         <h5>{{ $favorite->store->name }}</h5>

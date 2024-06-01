@@ -10,6 +10,14 @@
     </div>
 
     <div>
+        @if ($reservation->store->image)
+        <img src="{{ asset($reservation->store->image) }}" class="w-100 img-fluid">
+        @else
+        <img src="{{ asset('img/dummy.png')}}" class="w-100 img-fluid">
+        @endif
+    </div>
+
+    <div>
         <strong>店舗名:</strong>
         {{$reservation->store->name}}
     </div>

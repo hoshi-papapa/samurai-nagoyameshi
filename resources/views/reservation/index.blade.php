@@ -14,7 +14,11 @@
                 <div class="row">
                   <div class="col-md-4">
                       <a href="{{ route('stores.show', $reservation->store->id) }}">
-                          <img src="{{ asset('img/dummy.png') }}" alt="{{ $reservation->name }}">
+                        @if ($reservation->store->image !== "")
+                            <img src="{{ asset($reservation->store->image) }}"  alt="{{ $reservation->name }}" class="img-thumbnail">
+                        @else
+                            <img src="{{ asset('img/dummy.png')}}"  alt="{{ $reservation->name }}" class="img-thumbnail">
+                        @endif
                       </a>
                       <div>
                           <h5>{{ $reservation->store->name }}</h5>

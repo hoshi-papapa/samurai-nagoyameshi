@@ -15,6 +15,14 @@
     </div>
 
     <div>
+        @if ($store->image)
+        <img src="{{ asset($store->image) }}" class="w-100 img-fluid">
+        @else
+        <img src="{{ asset('img/dummy.png')}}" class="w-100 img-fluid">
+        @endif
+    </div>
+
+    <div>
         <strong>Name:</strong>
         {{$store->name}}
     </div>

@@ -9,10 +9,13 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Cashier\Billable;
 use App\Events\CustomerUpdated;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, Billable;
+    use HasApiTokens, HasFactory, Notifiable, Billable, SoftDeletes;
+
+    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -67,11 +70,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected static function booted()
     {
-        static::updated(function ($customer) {
-            if ($customer->hasStripeId()) {
-                // ジョブをディスパッチして非同期処理を行う
-                SyncStripeCustomerDetails::dispatch($customer);
-            }
-        });
+        // static::updated(function ($customer) {
+        //     if ($customer->hasStripeId()) {
+        //         // ジョブをディスパッチして非同期処理を行う
+        //         SyncStripeCustomerDetails::dispatch($customer);
+        //     }
+        // });
     }
 }
