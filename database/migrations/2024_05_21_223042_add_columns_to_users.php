@@ -18,8 +18,10 @@ return new class extends Migration
             $table->string('phone_number')->nullable(); //電話番号
             $table->string('occupation')->nullable(); //職業
             $table->smallInteger('age')->nullable(); //年齢
-            $table->date('subscription_end_date')->default('1970-01-01'); //サブスク終了日
-            $table->boolean('subscription_flag')->default(false); //サブスクフラグ
+            $table->date('subscription_end_date')->nullable(); //サブスク終了日
+            $table->boolean('subscription_flag')->nullable()->default(null); //サブスクフラグ
+            // $table->date('subscription_end_date')->default('1970-01-01'); //サブスク終了日
+            // $table->boolean('subscription_flag')->default(false); //サブスクフラグ
         });
     }
 

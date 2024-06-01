@@ -74,8 +74,8 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'occupation' => $data['occupation'],
             'age' => $data['age'],
-            'subscription_end_date' => null, // サブスク終了日
-            'subscription_flag' => false, // サブスクフラグ
+            // 'subscription_end_date' => null, // サブスク終了日
+            // 'subscription_flag' => false, // サブスクフラグ
             'password' => Hash::make($data['password']),
         ]);
     }
