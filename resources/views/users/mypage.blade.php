@@ -17,6 +17,9 @@
   <a href="{{route('stripe.subscription')}}">サブスクリプションの登録・解除</a>
   {{-- <a href="{{route('stripe.cancel', auth()->user())}}">サブスクリプションの解除</a> --}}
   <a href="{{route('subscription.cancel_form', auth()->user())}}">サブスクリプションの解除</a>
+  <a href="{{route('subscription.resume_form', auth()->user())}}">サブスクリプションの解除取り消し</a>
+
+  <a href="{{route('subscription.information')}}">ご契約状況</a>
 
 
   <div class="">

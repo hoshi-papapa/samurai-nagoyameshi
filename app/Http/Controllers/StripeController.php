@@ -9,6 +9,9 @@ use Laravel\Cashier\Cashier;
 use Stripe\Stripe;
 use Stripe\Charge;
 use App\Models\User;
+use Stripe\Customer;
+use Illuminate\Support\Facades\Log;
+use function Illuminate\Events\queueable;
 
 class StripeController extends Controller
 {
@@ -45,5 +48,25 @@ class StripeController extends Controller
         $user->subscription('default')->cancel();
         // 処理後に'ルート設定'にページ移行
         return redirect()->route('mypage');
+    }
+
+    public function resumesubscription(User $user, Request $request)
+    {
+        $user->subscription('default')->resume();
+        // 処理後に'ルート設定'にページ移行
+        return redirect()->route('mypage');
+    }
+
+    public function information()
+    {
+        $user = Auth::user();
+
+        //ユーザーのサブスクリプション情報を取得
+        $subscriptions = $user->subscriptions;
+
+
+
+        //ビューにデータを渡して表示
+        return view('subscription_information', ['subscriptions' => $subscriptions,]);
     }
 }

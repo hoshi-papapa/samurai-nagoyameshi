@@ -66,6 +66,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 });
 
+//有料会員が使用できるルート
+Route::middleware(['StripeMiddleware'])->group(function () {
+    // Route::get('/subscription/information/{user}', [StripeController::class, 'information'])->name('stripe.sentsubscription');
+    Route::get('/subscription/information', [StripeController::class, 'information'])->name('subscription.information');
+});
 
 Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
@@ -79,8 +84,17 @@ Route::get('/subscription/cancel', function () {
     ]);
 })->name('subscription.cancel_form');
 
+//キャンセル取り消しフォームを表示するルート
+Route::get('/subscription/resume', function () {
+    return view('post.subscription_resume', [
+        'user' => auth()->user()
+    ]);
+})->name('subscription.resume_form');
+
 //サブスクリプションをキャンセルするルート
 Route::post('/subscription/cancel/{user}', [StripeController::class, 'cancelsubscription'])->name('stripe.cancel');
+//サブスクリプションを再開するルート
+Route::post('/subscription/resume/{user}', [StripeController::class, 'resumesubscription'])->name('stripe.resume');
 
 // 不要なAuth::routes()を削除しました
 
