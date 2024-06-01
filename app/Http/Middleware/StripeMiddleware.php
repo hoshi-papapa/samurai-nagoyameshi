@@ -18,7 +18,7 @@ class StripeMiddleware
     {
         if ($request->user() && !$request->user()->subscribed('default')) {
             //このユーザーは支払っていない顧客。サブスク登録ページにジャンプする
-            return redirect()->route('subscription');
+            return redirect()->route('stripe.subscription');
         }
         return $next($request);
     }

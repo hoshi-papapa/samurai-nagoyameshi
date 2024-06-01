@@ -22,40 +22,27 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+//ユーザーの登録機能
 Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('/register', 'Auth\RegisterController@register');
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
-
+// 'auth.php'ファイルの内容を現在のルート定義ファイルに取り込むためのコード
 require __DIR__ . '/auth.php';
 
 // メール認証済みかつログイン中のユーザーのみが使用できるルート
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::resource('stores', StoreController::class);
+    //ログイン後のページ
+    Route::get('/', [StoreController::class, 'index'])->name('store.index');
 
-    Route::post('reviews', [ReviewController::class, 'store'])->name('reviews.store');
+    //会員情報関連ルート
+    Route::controller(ProfileController::class)->group(function () {
+        Route::get('/profile', 'edit')->name('profile.edit');
+        Route::patch('/profile', 'update')->name('profile.update');
+        Route::delete('/profile', 'destroy')->name('profile.destroy');
+    });
 
-    Route::get('favorite/index', [FavoriteController::class, 'index'])->name('favorite.index');
-    Route::post('favorite', [FavoriteController::class, 'store'])->name('favorite.store');
-    Route::delete('favorite/{store}', [FavoriteController::class, 'destroy'])->name('favorite.destroy');
-
-    Route::get('reservation/index', [ReservationController::class, 'index'])->name('reservation.index');
-    Route::get('reservation/{id}', [ReservationController::class, 'show'])->name('reservation.show');
-    Route::get('reservation/create/{store_id}', [ReservationController::class, 'create'])->name('reservation.create');
-    Route::post('reservation', [ReservationController::class, 'store'])->name('reservation.store');
+    Route::resource('stores', StoreController::class)->only(['index', 'show']);
 
     Route::controller(UserController::class)->group(function () {
         Route::get('users/mypage', 'mypage')->name('mypage');
@@ -64,38 +51,50 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('users/mypage/password/edit', 'edit_password')->name('mypage.edit_password');
         Route::put('users/mypage/password', 'update_password')->name('mypage.update_password');
     });
-});
 
-//有料会員が使用できるルート
-Route::middleware(['StripeMiddleware'])->group(function () {
-    // Route::get('/subscription/information/{user}', [StripeController::class, 'information'])->name('stripe.sentsubscription');
     Route::get('/subscription/information', [StripeController::class, 'information'])->name('subscription.information');
+
+    Route::get('/subscription', [StripeController::class, 'subscription'])->name('stripe.subscription');
+    Route::post('/subscription/afterpay', [StripeController::class, 'afterpay'])->name('stripe.afterpay');
+
+    //有料会員が使用できるルート
+    Route::middleware(['StripeMiddleware'])->group(function () {
+        //有料会員機能
+        Route::post('reviews', [ReviewController::class, 'store'])->name('reviews.store');
+
+        Route::controller(FavoriteController::class)->group(function () {
+            Route::get('favorite/index', 'index')->name('favorite.index');
+            Route::post('favorite', 'store')->name('favorite.store');
+            Route::delete('favorite/{store}', 'destroy')->name('favorite.destroy');
+        });
+
+        Route::controller(ReservationController::class)->group(function () {
+            Route::get('reservation/index', 'index')->name('reservation.index');
+            Route::get('reservation/{id}', 'show')->name('reservation.show');
+            Route::get('reservation/create/{store_id}', 'create')->name('reservation.create');
+            Route::post('reservation', 'store')->name('reservation.store');
+        });
+
+        //キャンセルフォームを表示するルート
+        Route::get('/subscription/cancel', function () {
+            return view('post.subscription_cancel', [
+                'user' => auth()->user()
+            ]);
+        })->name('subscription.cancel_form');
+
+        //サブスクリプションをキャンセルするルート
+        Route::post('/subscription/cancel/{user}', [StripeController::class, 'cancelsubscription'])->name('stripe.cancel');
+
+        //キャンセル取り消しフォームを表示するルート
+        Route::get('/subscription/resume', function () {
+            return view('post.subscription_resume', [
+                'user' => auth()->user()
+            ]);
+        })->name('subscription.resume_form');
+
+        //サブスクリプションを再開するルート
+        Route::post('/subscription/resume/{user}', [StripeController::class, 'resumesubscription'])->name('stripe.resume');
+    });
 });
 
 Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
-
-Route::get('/subscription', [StripeController::class, 'subscription'])->name('stripe.subscription');
-Route::post('/subscription/afterpay', [StripeController::class, 'afterpay'])->name('stripe.afterpay');
-
-//キャンセルフォームを表示するルート
-Route::get('/subscription/cancel', function () {
-    return view('post.subscription_cancel', [
-        'user' => auth()->user()
-    ]);
-})->name('subscription.cancel_form');
-
-//キャンセル取り消しフォームを表示するルート
-Route::get('/subscription/resume', function () {
-    return view('post.subscription_resume', [
-        'user' => auth()->user()
-    ]);
-})->name('subscription.resume_form');
-
-//サブスクリプションをキャンセルするルート
-Route::post('/subscription/cancel/{user}', [StripeController::class, 'cancelsubscription'])->name('stripe.cancel');
-//サブスクリプションを再開するルート
-Route::post('/subscription/resume/{user}', [StripeController::class, 'resumesubscription'])->name('stripe.resume');
-
-// 不要なAuth::routes()を削除しました
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
