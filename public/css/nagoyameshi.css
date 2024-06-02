@@ -3,7 +3,19 @@ body {
     font-size: 16px; 
 }
 
-/* ページネーション */
+/* マイページの設定 */
+.mypage_style { 
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.mypage_style a {
+    color: black;
+    text-decoration: none;
+}
+.mypage_style a:hover {
+    text-decoration: underline;
+}
 
 
 #card-element,#card-holder-name {

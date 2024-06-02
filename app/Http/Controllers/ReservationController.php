@@ -39,7 +39,7 @@ class ReservationController extends Controller
             'store_id' => 'required|integer',
         ]);
 
-        $isoDateTime = "2024-05-29T22:37";
+        $isoDateTime = $request->input('reservation_date');
         // "T"で日付と時刻を分割し、日付と時刻を別々の変数に格納する
         list(
             $date, $time

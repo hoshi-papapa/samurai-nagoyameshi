@@ -26,7 +26,7 @@
             @component('components.header')
             @endcomponent
 
-            <main class="py-1">
+            <main class="py-1" style="min-height: calc(100vh - 9.6rem);">
                 @yield('content')
             </main>
 

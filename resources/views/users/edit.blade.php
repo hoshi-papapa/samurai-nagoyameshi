@@ -1,143 +1,132 @@
 @extends('layouts.app')
 
 @section('content')
-<div>
-  <h1><a href="{{route('mypage') }}">マイページ</a> > 会員情報の編集</h1>
+<div class="container">
+  <h3>会員情報の編集</h3>
 
   <hr>
-
-  <form method="POST" action="{{ route('mypage') }}">
-    @csrf
-    <input type="hidden" name="_method" value="PUT">
-    <div class="form-group">
-      <div>
-        <label for="name">氏名</label>
-      </div>
-      <div>
-        <input id="name" type="text" name="name" value="{{ $user->name }}" required autocomplete="name" autofocus placeholder="侍 太郎">
+  <div class="d-flex justify-content-center py-3">
+    <form method="POST" action="{{ route('mypage') }}" class="w-100" style="max-width: 600px;">
+      @csrf
+      <input type="hidden" name="_method" value="PUT">
+      
+      <div class="form-group row justify-content-center">
+        <label for="name" class="col-md-4 col-form-label text-md-right">氏名</label>
+        <div class="col-md-6">
+          <input id="name" type="text" class="form-control" name="name" value="{{ $user->name }}" required autocomplete="name" autofocus placeholder="侍 太郎" style="max-width: 300px;">
           @error('name')
-          <span role="alert">
+          <span class="invalid-feedback" role="alert">
             <strong>氏名を入力してください</strong>
           </span>
           @enderror
-        </input>
+        </div>
       </div>
-    </div>
-    <br>
+      <br>
 
-    <div class="form-group">
-      <div>
-        <label for="nickname">ニックネーム</label>
-      </div>
-      <div>
-        <input id="nickname" type="text" name="nickname" value="{{ $user->nickname }}" required autocomplete="nickname" autofocus placeholder="さむたろう">
+      <div class="form-group row justify-content-center">
+        <label for="nickname" class="col-md-4 col-form-label text-md-right">ニックネーム</label>
+        <div class="col-md-6">
+          <input id="nickname" type="text" class="form-control" name="nickname" value="{{ $user->nickname }}" required autocomplete="nickname" autofocus placeholder="さむたろう" style="max-width: 300px;">
           @error('nickname')
-          <span role="alert">
+          <span class="invalid-feedback" role="alert">
             <strong>ニックネームを入力してください</strong>
           </span>
           @enderror
-        </input>
+        </div>
       </div>
-    </div>
-    <br>
+      <br>
 
-    <div class="form-group">
-      <div>
-        <label for="phone_number">電話番号</label>
-      </div>
-      <div>
-        <input id="phone_number" type="text" name="phone_number" value="{{ $user->phone_number }}" required autocomplete="phone_number" autofocus placeholder="01-2345-6789">
+      <div class="form-group row justify-content-center">
+        <label for="phone_number" class="col-md-4 col-form-label text-md-right">電話番号</label>
+        <div class="col-md-6">
+          <input id="phone_number" type="text" class="form-control" name="phone_number" value="{{ $user->phone_number }}" required autocomplete="phone_number" autofocus placeholder="01-2345-6789" style="max-width: 300px;">
           @error('phone_number')
-          <span role="alert">
+          <span class="invalid-feedback" role="alert">
             <strong>電話番号を入力してください</strong>
           </span>
           @enderror
-        </input>
+        </div>
       </div>
-    </div>
-    <br>
+      <br>
 
-    <div class="form-group">
-      <div>
-        <label for="email">メールアドレス</label>
-      </div>
-      <div>
-        <input id="email" type="text" name="email" value="{{ $user->email }}" required autocomplete="email" autofocus placeholder="taro@example.com">
+      <div class="form-group row justify-content-center">
+        <label for="email" class="col-md-4 col-form-label text-md-right">メールアドレス</label>
+        <div class="col-md-6">
+          <input id="email" type="text" class="form-control" name="email" value="{{ $user->email }}" required autocomplete="email" autofocus placeholder="taro@example.com" style="max-width: 300px;">
           @error('email')
-          <span role="alert">
+          <span class="invalid-feedback" role="alert">
             <strong>メールアドレスを入力してください</strong>
           </span>
           @enderror
-        </input>
+        </div>
       </div>
-    </div>
-    <br>
+      <br>
 
-    <div class="form-group">
-      <div>
-        <label for="occupation">職業</label>
-      </div>
-      <div>
-        <input id="occupation" type="text" name="occupation" value="{{ $user->occupation }}" required autocomplete="occupation" autofocus placeholder="宇宙飛行士">
+      <div class="form-group row justify-content-center">
+        <label for="occupation" class="col-md-4 col-form-label text-md-right">職業</label>
+        <div class="col-md-6">
+          <input id="occupation" type="text" class="form-control" name="occupation" value="{{ $user->occupation }}" required autocomplete="occupation" autofocus placeholder="宇宙飛行士" style="max-width: 300px;">
           @error('occupation')
-          <span role="alert">
+          <span class="invalid-feedback" role="alert">
             <strong>職業を入力してください</strong>
           </span>
           @enderror
-        </input>
+        </div>
       </div>
-    </div>
-    <br>
+      <br>
 
-    <div class="form-group">
-      <div>
-        <label for="age">年令</label>
-      </div>
-      <div>
-        <input id="age" type="text" name="age" value="{{ $user->age }}" required autocomplete="age" autofocus placeholder="20">
+      <div class="form-group row justify-content-center">
+        <label for="age" class="col-md-4 col-form-label text-md-right">年齢</label>
+        <div class="col-md-6">
+          <input id="age" type="text" class="form-control" name="age" value="{{ $user->age }}" required autocomplete="age" autofocus placeholder="20" style="max-width: 300px;">
           @error('age')
-          <span role="alert">
-            <strong>年令を入力してください</strong>
+          <span class="invalid-feedback" role="alert">
+            <strong>年齢を入力してください</strong>
           </span>
           @enderror
-        </input>
+        </div>
       </div>
-    </div>
-    
-    <hr>
-    <button type="submit">
-      保存
-    </button>
-  </form>
+      
+      <div class="form-group row mb-0 justify-content-center mt-5">
+        <div class="col-md-8 text-center">
+          <button type="submit" class="btn btn-warning">
+            保存
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 
   <hr>
-    <div class="d-flex justify-content-start">
-        <form method="POST" action="{{ route('mypage.destroy') }}">
-            @csrf
-            <input type="hidden" name="_method" value="DELETE">
-            <div class="btn dashboard-delete-link" data-bs-toggle="modal" data-bs-target="#delete-user-confirm-modal">退会する</div>
 
-            <div class="modal fade" id="delete-user-confirm-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel"><label>本当に退会しますか？</label></h5>
-                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="閉じる">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p class="text-center">一度退会するとデータはすべて削除され復旧はできません。</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn dashboard-delete-link" data-bs-dismiss="modal">キャンセル</button>
-                            <button type="submit" class="btn samuraimart-delete-submit-button">退会する</button>
-                        </div>
-                    </div>
+  <form method="POST" action="{{ route('mypage.destroy') }}">
+    @csrf
+    <input type="hidden" name="_method" value="DELETE">
+    <div class="container mt-5">
+      <div class="d-flex justify-content-end">
+          <div class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#delete-user-confirm-modal">退会する</div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="delete-user-confirm-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">退会確認</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    本当に退会しますか？
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="submit" class="btn btn-danger">退会する</button>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
+  </form>
   
 </div>
 
