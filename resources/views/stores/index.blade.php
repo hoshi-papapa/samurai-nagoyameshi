@@ -23,7 +23,17 @@
             <div class="mb-3">
                 <form action="{{ route('stores.index') }}" method="GET" class="row g-1">
                     <div class="col-auto">
-                        <input class="form-control" name="keyword" placeholder="キーワードを入力">
+                        <input class="form-control" name="keyword" placeholder="キーワードを入力" value="{{ request('keyword') }}">
+                    </div>
+                    <div class="col-auto">
+                        <select class="form-select" name="category">
+                            <option value="">全てのカテゴリ</option>
+                            @foreach ($allcategories as $category)
+                                <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="col-auto">
                         <button type="submit" class="btn btn-warning">
@@ -36,57 +46,40 @@
     </div>
 
     {{-- 検索結果の表示 --}}
-    <div class="row">
-        @if( $selected_category !== null )
-            <h3>「{{ $selected_category->name }}」のお店　{{$total_count}}件</h3>
-            @if ($total_count == 0)
-                <p>申し訳ございません。「{{ $selected_category->name }}」のお店はありませんでした。</p>
+    @if($selected_category && $keyword)
+        <h3>「{{ $selected_category->name }}」カテゴリ / 「{{ $keyword }}」の検索結果　{{ $total_count }}件</h3>
+        @if ($total_count == 0)
+            <p>申し訳ございません。「{{ $selected_category->name }}」カテゴリ / 「{{ $keyword }}」のお店はありませんでした。</p>
+        @endif
+    @elseif($selected_category)
+        <h3>「{{ $selected_category->name }}」カテゴリの検索結果　{{ $total_count }}件</h3>
+        @if ($total_count == 0)
+            <p>申し訳ございません。「{{ $selected_category->name }}」カテゴリのお店はありませんでした。</p>
+        @endif
+    @elseif($keyword)
+        <h3>「{{ $keyword }}」の検索結果　{{ $total_count }}件</h3>
+        @if ($total_count == 0)
+            <p>申し訳ございません。「{{ $keyword }}」のお店はありませんでした。</p>
+        @endif
+    @endif
+
+    <div class="d-flex align-items-center mb-4">
+        <span class="me-2">並び替え</span>
+        <form method="GET" action="{{ route('stores.index') }}">
+            @if ($selected_category)
+                <input type="hidden" name="category" value="{{ $selected_category->id }}">
             @endif
-        @elseif ($keyword !== null)
-            <h3>「{{ $keyword }}」の検索結果　{{ $total_count }}件</h3>
-        @endif
+            <select class="form-select" name="select_sort" onChange="this.form.submit();">
+                @foreach ($sorts as $value => $key)
+                    @if ($sorted === $value)
+                        <option value="{{ $value }}" selected>{{ $key }}</option>
+                    @else
+                        <option value="{{ $value }}">{{ $key }}</option>
+                    @endif
+                @endforeach
+            </select>
+        </form>
     </div>
-
-    {{-- 選択中のカテゴリがある場合 --}}
-    <div>
-        @if( $selected_category !== null )
-            <a href="{{ route('stores.index') }}">トップ</a> ＞ {{ $selected_category->name}}
-            <h1>「{{ $selected_category->name }}」のお店　{{$total_count}}件</h1>
-            @if ($total_count == 0)
-                <p>申し訳ございません。「{{ $selected_category->name }}」のお店はありませんでした。</p>
-            @endif
-        @elseif ($keyword !== null)
-            <a href="{{ route('stores.index') }}">トップ</a> ＞ お店一覧
-            <h1>「{{ $keyword }}」の検索結果　{{ $total_count }}件</h1>
-        @endif
-    </div>
-
-    {{-- 並び替え機能 --}}
-    {{-- <div>
-        Sort By
-        @sortablelink('updated_at', '更新順で並び替え')
-        @sortablelink('name', '名前順で並び替え')
-        @sortablelink('reviews_avg_rating', '評価順で並び替え')
-    </div> --}}
-
-<div class="d-flex align-items-center mb-4">
-    <span class="me-2">並び替え</span>
-    <form method="GET" action="{{ route('stores.index') }}">
-        @if ($selected_category)
-            <input type="hidden" name="category" value="{{ $selected_category->id }}">
-        @endif
-        <select class="form-select" name="select_sort" onChange="this.form.submit();">
-            @foreach ($sorts as $value => $key)
-                @if ($sorted === $value)
-                    <option value="{{ $value }}" selected>{{ $key }}</option>
-                @else
-                    <option value="{{ $value }}">{{ $key }}</option>
-                @endif
-            @endforeach
-        </select>
-    </form>
-</div>
-
 
     {{-- ランダムなカテゴリを表示するチップ --}}
     <div class="search-box mb-4">
