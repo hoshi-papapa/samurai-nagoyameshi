@@ -1,38 +1,30 @@
-
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-md navbar-light bg-warning shadow-sm mb-3">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/stores') }}">
-            {{ config('app.name', 'NAGOYAMESHI') }}
+            <img src="{{ asset('img/logo.jpg') }}" height="40">
         </a>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
         </button>
-
+        
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto">
-                @guest
-                    @if (Route::has('login'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">ログイン</a>
-                        </li>
-                    @endif
-
-                    @if (Route::has('register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">登録</a>
-                        </li>
-                    @endif
-                @else
-                    <a href="{{route('mypage') }}">
+                <li class="nav-item me-3 text-dark">
+                    <a href="{{route('favorite.index') }}" class="text-dark">
+                        <i class="fa-solid fa-heart"></i>
+                    </a>
+                </li>
+                <li class="nav-item me-3">
+                    <a href="{{route('reservation.index') }}" class="text-dark">
+                        <i class="fa-solid fa-calendar"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('mypage') }}" class="fw-bold text-dark" style="text-decoration: none;">
                         マイページ
                     </a>
-                    <a href="{{route('favorite.index') }}">
-                        お気に入り
-                    </a>
-                    <a href="{{route('reservation.index') }}">
-                        予約履歴
-                    </a>
-                @endguest
+                </li>
             </ul>
         </div>
     </div>

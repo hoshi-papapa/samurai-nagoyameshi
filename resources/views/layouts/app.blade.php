@@ -14,6 +14,7 @@
         <script src="https://kit.fontawesome.com/68697ef03c.js" crossorigin="anonymous"></script>
 
         {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
+        <link href="{{ asset('css/nagoyameshi.css') }}" rel="stylesheet">
         <link href="{{ asset('css/stripe.css') }}" rel="stylesheet">
 
         {{-- Scripts --}}
@@ -25,7 +26,7 @@
             @component('components.header')
             @endcomponent
 
-            <main class="py-4">
+            <main class="py-1">
                 @yield('content')
             </main>
 

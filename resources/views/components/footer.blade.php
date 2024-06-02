@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm mt-5">
-    <a class="navbar-brand mx-auto" href="{{ url('/stores') }}">
-        sample nagoyameshi
-    </a>
-</nav>
+<footer class="bg-warning text-dark text-center py-3 mt-3">
+    <div class="container">
+        <p class="mb-0">&copy; 2024 NAGOYAMESHI. All rights reserved.</p>
+    </div>
+</footer>

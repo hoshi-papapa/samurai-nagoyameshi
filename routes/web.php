@@ -22,6 +22,10 @@ use Illuminate\Http\Request;
 |
 */
 
+route::get('/hello', function () {
+    return view('test');
+});
+
 //ユーザーの登録機能
 Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('/register', 'Auth\RegisterController@register');

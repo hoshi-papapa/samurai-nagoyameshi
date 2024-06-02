@@ -1,3 +1,11 @@
+/* ページ全体の設定 */
+body {
+    font-size: 16px; 
+}
+
+/* 検索ボックス */
+
+
 
 #card-element,#card-holder-name {
     border-radius: 4px 4px 0 0 ;
