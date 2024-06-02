@@ -4,17 +4,6 @@ body {
 }
 
 /* ページネーション */
-.pagination { 
-    /* background-color: #ffc107; */
-}
-
-.page-link { 
-}
-
-.page-item.active { 
-    background-color: #ffc107;
-
-}
 
 
 #card-element,#card-holder-name {

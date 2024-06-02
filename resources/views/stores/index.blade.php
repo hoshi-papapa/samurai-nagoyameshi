@@ -81,26 +81,30 @@
         </div>
     </div>
 
+    <hr>
+
     {{-- 検索結果の表示 --}}
-    @if($selected_category && $keyword)
-        <h4 class="mt-3">「{{ $selected_category->name }}」カテゴリ / 「{{ $keyword }}」の検索結果　{{ $total_count }}件</h4>
-        @if ($total_count == 0)
-            <p class="mt-3">申し訳ございません。「{{ $selected_category->name }}」カテゴリ / 「{{ $keyword }}」のお店はありませんでした。</p>
+    <div class="container mt-3">
+        @if($selected_category && $keyword)
+            <h4 class="mt-3">「{{ $selected_category->name }}」カテゴリ / 「{{ $keyword }}」の検索結果　{{ $total_count }}件</h4>
+            @if ($total_count == 0)
+                <p class="mt-3">申し訳ございません。「{{ $selected_category->name }}」カテゴリ / 「{{ $keyword }}」のお店はありませんでした。</p>
+            @endif
+        @elseif($selected_category)
+            <h4 class="mt-3">「{{ $selected_category->name }}」カテゴリの検索結果　{{ $total_count }}件</h4>
+            @if ($total_count == 0)
+                <p class="mt-3">申し訳ございません。「{{ $selected_category->name }}」カテゴリのお店はありませんでした。</p>
+            @endif
+        @elseif($keyword)
+            <h4 class="mt-3">「{{ $keyword }}」の検索結果　{{ $total_count }}件</h4>
+            @if ($total_count == 0)
+                <p class="mt-3">申し訳ございません。「{{ $keyword }}」のお店はありませんでした。</p>
+            @endif
         @endif
-    @elseif($selected_category)
-        <h4 class="mt-3">「{{ $selected_category->name }}」カテゴリの検索結果　{{ $total_count }}件</h4>
-        @if ($total_count == 0)
-            <p class="mt-3">申し訳ございません。「{{ $selected_category->name }}」カテゴリのお店はありませんでした。</p>
-        @endif
-    @elseif($keyword)
-        <h4 class="mt-3">「{{ $keyword }}」の検索結果　{{ $total_count }}件</h4>
-        @if ($total_count == 0)
-            <p class="mt-3">申し訳ございません。「{{ $keyword }}」のお店はありませんでした。</p>
-        @endif
-    @endif
+    </div>
 
     {{-- 店舗一覧表示 --}}
-    <div class="container mt-5">
+    <div class="container mt-4">
         @foreach($stores as $store)
             <a href="{{route('stores.show', $store)}}" style="text-decoration: none;">
                 <div class="card mb-3">
@@ -117,7 +121,6 @@
                                 <h5 class="card-title">{{$store->name}}</h5>
                                 <p class="card-text">{{$store->average_review ?? 'まだ評価されていません'}}</p>
                                 <p class="card-text">{{$store->description}}</p>
-                                <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
                             </div>
                         </div>
                     </div>
