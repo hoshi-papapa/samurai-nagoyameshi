@@ -20,8 +20,6 @@ return new class extends Migration
             $table->smallInteger('age')->nullable(); //年齢
             $table->date('subscription_end_date')->nullable(); //サブスク終了日
             $table->boolean('subscription_flag')->nullable()->default(null); //サブスクフラグ
-            // $table->date('subscription_end_date')->default('1970-01-01'); //サブスク終了日
-            // $table->boolean('subscription_flag')->default(false); //サブスクフラグ
         });
     }
 

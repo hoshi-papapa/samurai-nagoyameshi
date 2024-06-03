@@ -47,8 +47,6 @@ class RegisteredUserController extends Controller
             'occupation' => ['nullable', 'string', 'max:255'], // 職業
             'age' => ['nullable', 'integer', 'min:0', 'max:150'], // 年齢
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'subscription_end_date' => ['required', 'date', 'after_or_equal:1970-01-01'], // サブスク終了日
-            'subscription_flag' => ['required', 'boolean'], // サブスクフラグ
         ]);
 
         $user = User::create([
@@ -58,8 +56,6 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'occupation' => $request->occupation, // 職業
             'age' => $request->age, // 年齢
-            'subscription_end_date' => $request->subscription_end_date, // サブスク終了日
-            'subscription_flag' => $request->subscription_flag, // サブスクフラグ
             'password' => Hash::make($request->password),
         ]);
 
