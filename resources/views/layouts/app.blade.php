@@ -17,9 +17,12 @@
         <link href="{{ asset('css/nagoyameshi.css') }}" rel="stylesheet">
         <link href="{{ asset('css/stripe.css') }}" rel="stylesheet">
 
-        {{-- Scripts --}}
+        {{-- Scripts (stripeの絡みがあるのでscriptはこちらに記述する --}}
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+        {{-- <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script> --}}
+
         {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
     <body>
         <div id="app">

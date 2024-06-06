@@ -119,7 +119,17 @@
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title">{{$store->name}}</h5>
-                                <p class="card-text">{{$store->average_review ?? 'まだ評価されていません'}}</p>
+                                @if ($store->average_review)
+                                    <div style="display: flex; align-items: center;" class="mb-2">
+                                        <div class="star-rating" data-rate={{ round($store->average_review * 2) /2 }}></div>
+                                        <div class="rating">　{{ number_format(round($store->average_review, 1), 1) }}</div>
+                                    </div>
+                                @else
+                                    <div style="display: flex; align-items: center;" class="mb-2">
+                                        <div class="star-rating" data-rate={{ round($store->average_review * 2) /2 }}></div>
+                                        <div class="rating">　－</div>
+                                    </div>
+                                @endif
                                 <p class="card-text">{{$store->description}}</p>
                             </div>
                         </div>

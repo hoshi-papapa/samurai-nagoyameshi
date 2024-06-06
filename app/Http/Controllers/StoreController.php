@@ -25,7 +25,7 @@ class StoreController extends Controller
         // 並び替えのキーと値を設定
         $sorts = [
             'updated_at desc' => '新着順',
-            'reviews_avg_rating asc' => 'レビューの高い順',
+            'reviews_avg_rating desc' => 'レビューの高い順',
         ];
 
         // 並び替えセレクトボックスの値を設定（初期値）

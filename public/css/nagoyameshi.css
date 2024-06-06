@@ -17,26 +17,62 @@ body {
     text-decoration: underline;
 }
 
+/* 一覧画面の「★」表示設定 */
+.star-rating {
+    position: relative;
+    font-size: 18px;
+    width: 90px; 
+    height: 18px;
+    display: inline-block;
 
-#card-element,#card-holder-name {
-    border-radius: 4px 4px 0 0 ;
-    padding: 12px;
-    border: 1px solid rgba(50, 50, 93, 0.1);
-    height: 44px;
-    width: 100%;
-    background: white;
+    &::before, &::after {
+        content: "★★★★★";
+        position: absolute;
+        height: 18px;
+        line-height: 18px;
+        display: inline-block;
+    }
+
+    &::before {
+        color:  #b2b2b2;
+    }
+
+    &::after {
+        color:  #ffc107;    
+        overflow: hidden;
+        width: calc(var(--rate) * 100%);
+    }
+
+    &[data-rate="0"]::after { --rate: 0; }
+    &[data-rate="0.5"]::after { --rate: 0.1; }
+    &[data-rate="1"]::after { --rate: 0.2; }
+    &[data-rate="1.5"]::after { --rate: 0.3; }
+    &[data-rate="2"]::after { --rate: 0.4; }
+    &[data-rate="2.5"]::after { --rate: 0.5; }
+    &[data-rate="3"]::after { --rate: 0.6; }
+    &[data-rate="3.5"]::after { --rate: 0.7; }
+    &[data-rate="4"]::after { --rate: 0.8; }
+    &[data-rate="4.5"]::after { --rate: 0.9; }
+    &[data-rate="5"]::after { --rate: 1; }
 }
-button#card-button { 
-    background: #5469d4;
-    color: #ffffff;
-    font-family: Arial, sans-serif;
-    border-radius: 0 0 4px 4px;
-    border: 0;
-    padding: 12px 16px;
-    font-size: 16px;
-    font-weight: 600;
+
+/* レビュー投稿画面の「★」表示設定 */
+.rating-form .star-btn {
+    font-size: 2em;
     cursor: pointer;
-    display: block;
-    box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
-    width: 100%;
+    color: lightgray;
+    padding: 0; /* 余白をなくす */
+    margin: 0; /* 余白をなくす */
+    background-color: transparent; /* 背景を透明にする */
+    border: none; /* 枠線をなくす */
+}
+.star-btn.selected {
+    color: gold;
+}
+.star-btn.hover {
+    color: gold;
+}
+
+.rating-form .star-btn:hover {
+	cursor:pointer;
 }
