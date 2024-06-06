@@ -28,6 +28,17 @@
                     <table class="table table-striped">
                         <tbody>
                             <tr>
+                            <th scope="row">カテゴリ</th>
+                            <td>
+                                @foreach ($categories as $index => $category)
+                                    <span>{{ $category->name }}</span>
+                                    @if ($index < count($categories) - 1)
+                                        <span>, </span>
+                                    @endif
+                                @endforeach
+                            </td>
+                            </tr>
+                            <tr>
                             <th scope="row">住所</th>
                             <td>{{$store->Address}}</td>
                             </tr>

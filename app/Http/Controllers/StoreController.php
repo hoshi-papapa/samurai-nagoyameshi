@@ -91,6 +91,10 @@ class StoreController extends Controller
 
         $reviews = $store->reviews()->get();
 
-        return view('stores.show', compact('store', 'reviews'));
+        // 店舗の中間テーブルに紐づいているカテゴリーのリストを取得する
+        $store = Store::find($store->id);
+        $categories = $store->categories;
+
+        return view('stores.show', compact('store', 'reviews', 'categories'));
     }
 }
