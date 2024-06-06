@@ -1,40 +1,88 @@
 @extends('layouts.app')
 
 @section('content')
-    
-    <div>
-        <h2>予約詳細</h2>
-    </div>
-    <div>
-        <a href="{{ route('reservation.index') }}"> 予約一覧に戻る</a>
-    </div>
 
-    <div>
-        @if ($reservation->store->image)
-        <img src="{{ asset($reservation->store->image) }}" class="w-100 img-fluid">
-        @else
-        <img src="{{ asset('img/dummy.png')}}" class="w-100 img-fluid">
-        @endif
-    </div>
+<div class="container">
+    <h3>予約詳細</h3>
+    <hr>
+    <div class="row">
+        <!-- 左側の画像カラム -->
+        <div class="col-md-4">
+            <div class="card">
+                @if ($reservation->store->image)
+                    <img src="{{ asset($reservation->store->image) }}" class="card-img-top">
+                @else
+                    <img src="{{ asset('img/dummy.png') }}" class="card-img-top">
+                @endif
+            </div>
+        </div>
+        
+        <!-- 右側のテーブルカラム -->
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">{{ $reservation->store->name }}</h5>
 
-    <div>
-        <strong>店舗名:</strong>
-        {{$reservation->store->name}}
-    </div>
+                <table class="table table-striped mt-2">
+                    <thead>
+                        <tr>
+                            <th colspan="2" style="font-size: 1.2em;">予約情報</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row" style="width: 100px;">来店日時</th>
+                            <td>{{ \Carbon\Carbon::parse($reservation->reservation_date)->format('Y年n月j日 G時i分') }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">予約人数</th>
+                            <td>{{ $reservation->number_of_people }}名</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">予約日</th>
+                            <td>{{ \Carbon\Carbon::parse($reservation->created_at)->format('Y年n月j日') }}</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-    <div>
-        <strong>予約日時:</strong>
-        {{$reservation->reservation_date}}
+                <table class="table table-striped mt-2">
+                    <thead>
+                        <tr>
+                            <th colspan="2" style="font-size: 1.2em;">店舗情報</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row" style="width: 100px;">カテゴリ</th>
+                            <td>
+                                @foreach ($categories as $index => $category)
+                                    <span>{{ $category->name }}</span>
+                                    @if ($index < count($categories) - 1)
+                                        <span>, </span>
+                                    @endif
+                                @endforeach
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">説明</th>
+                            <td>{{ $reservation->store->description }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">住所</th>
+                            <td>{{ $reservation->store->Address }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">電話番号</th>
+                            <td>{{ $reservation->store->phone_number }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">営業時間</th>
+                            <td>{{ $reservation->store->business_hours }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-
-    <div>
-        <strong>予約人数:</strong>
-        {{$reservation->number_of_people}} 
-    </div>
-
-    <div>
-        <strong>予約確定日:</strong>
-        {{$reservation->created_at}} 
-    </div>
+</div>
 
 @endsection

@@ -13,7 +13,10 @@ class ReservationController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $reservations = Reservation::where('user_id', $user->id)->with('store')->get();
+        $reservations = Reservation::where('user_id', $user->id)
+            ->with('store')
+            ->orderBy('reservation_date', 'desc') // 来店日順に並び替え
+            ->get();
 
         return view('reservation.index', compact('reservations'));
     }
@@ -22,7 +25,11 @@ class ReservationController extends Controller
     {
         $reservation = Reservation::with('store')->findOrFail($id);
 
-        return view('reservation.show', compact('reservation'));
+        // 店舗の中間テーブルに紐づいているカテゴリーのリストを取得する
+        $store = Store::find($reservation->store->id);
+        $categories = $store->categories;
+
+        return view('reservation.show', compact('reservation', 'categories'));
     }
 
     public function create($store_id)
