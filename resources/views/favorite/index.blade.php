@@ -29,7 +29,7 @@
                 <p class="card-text mt-5">{{ $favorite->store->description }}</p>
 
                 <div>
-                    <a href="{{ route('favorite.destroy', $favorite->store->id) }}" class="btn btn-outline-danger" 
+                    <a href="{{ route('favorite.destroy', $favorite->store->id) }}" class="btn btn-danger" 
                         onclick="event.preventDefault(); document.getElementById('favorites-destroy-form{{$favorite->store->id}}').submit();">
                         お気に入りから削除
                     </a>
