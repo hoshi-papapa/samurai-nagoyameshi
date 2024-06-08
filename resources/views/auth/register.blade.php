@@ -48,26 +48,12 @@
             <x-input-error :messages="$errors->get('occupation')" class="mt-2" />
         </div>
 
-        <!-- 年令 -->
+        <!-- 年齢 -->
         <div class="mb-4">
-            <x-input-label for="age" :value="__('年令')" />
+            <x-input-label for="age" :value="__('年齢')" />
             <x-text-input id="age" class="block mt-1 w-full" type="number" name="age" :value="old('age')" required autofocus autocomplete="age" />
             <x-input-error :messages="$errors->get('age')" class="mt-2" />
         </div>       
-
-        <!-- サブスク終了日（非表示） -->
-        <div class="mb-4" style="display: none;">
-            <x-input-label for="subscription_end_date" :value="__('サブスク終了日')" />
-            <x-text-input id="subscription_end_date" class="block mt-1 w-full" type="date" name="subscription_end_date" :value="old('subscription_end_date')" autofocus autocomplete="subscription_end_date" />
-            <x-input-error :messages="$errors->get('subscription_end_date')" class="mt-2" />
-        </div>
-
-        <!-- サブスクフラグ -->
-        <div class="mb-4" style="display: none;">
-            <x-input-label for="subscription_flag" :value="__('サブスクフラグ')" />
-            <x-text-input id="subscription_flag" class="block mt-1 w-full" type="text" name="subscription_flag" :value="old('subscription_flag')" autofocus autocomplete="subscription_flag" />
-            <x-input-error :messages="$errors->get('subscription_flag')" class="mt-2" />
-        </div>
 
         <!-- Password -->
         <div class="mb-4">
