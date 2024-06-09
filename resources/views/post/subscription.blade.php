@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container">
-    <h3>サブスクリプション登録</h3>
+    <h3>プレミアムプラン登録</h3>
     <hr>
 
     <div class="emphasize">プレミアム会員になると、月額500円（税込）で下記の機能をお使いいただけます。</div>
@@ -32,7 +32,7 @@
 						
 								<div id="card-errors" role="alert" style='color:red'></div>
 						
-								<button class="btn btn-warning mt-3" id="card-button" data-secret="{{ $intent->client_secret }}">送信する</button>
+								<button class="btn btn-warning mt-3" id="card-button" data-secret="{{ $intent->client_secret }}">登録する</button>
 						
 						</form>
 				</div>

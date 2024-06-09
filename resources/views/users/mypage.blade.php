@@ -19,7 +19,6 @@
 
       @if($latestSubscription->ends_at)
       {{-- 有効期限が設定されている場合 --}}
-      <p>有効期限「{{ $latestSubscription->ends_at->format('Y年m月d日') }}」まで、この機能をお使いいただけます。</p>
       <div>
         <a href="{{route('favorite.index')}}">お気に入りリスト確認</a>
       </div>
@@ -27,7 +26,7 @@
         <a href="{{route('reservation.index')}}">予約履歴の確認</a>
       </div>
       <div>
-        <a href="{{route('subscription.cancel_form', auth()->user())}}">プレミアムプランを解約する</a>
+        <a href="{{route('subscription.resume_form', auth()->user())}}">プレミアムプランを継続する</a>
       </div>
 
       @else
@@ -39,7 +38,7 @@
         <a href="{{route('reservation.index')}}">予約履歴の確認</a>
       </div>
       <div>
-        <a href="{{route('subscription.resume_form', auth()->user())}}">プレミアムプランを継続する</a>
+        <a href="{{route('subscription.cancel_form', auth()->user())}}">プレミアムプランを解約する</a>
       </div>
 
       @endif
