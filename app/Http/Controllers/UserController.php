@@ -13,7 +13,17 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        return view('users.mypage', compact('user'));
+        //ユーザーのサブスクリプション情報を取得
+        $subscriptions = $user->subscriptions;
+        $latestSubscription = $subscriptions->first();
+
+        // $latestSubscriptionがnullの場合、ビューに渡す前に処理を行う
+        if (!$latestSubscription) {
+            // 必要に応じて、nullの場合の処理を追加
+            $latestSubscription = null;
+        }
+
+        return view('users.mypage', compact('user', 'latestSubscription'));
     }
     /**
      * Show the form for editing the specified resource.
