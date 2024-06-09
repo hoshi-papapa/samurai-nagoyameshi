@@ -23,9 +23,7 @@ body {
     background-color: #ffffcc; /* 背景色を薄い黄色にする例 */
     padding: 10px;
     border-radius: 5px;
-    max-width: 500px;
 }
-
 
 /* 一覧画面の「★」表示設定 */
 .star-rating {

@@ -6,6 +6,19 @@
     <h3>サブスクリプション登録</h3>
     <hr>
 
+    <div class="emphasize">プレミアム会員になると、月額500円（税込）で下記の機能をお使いいただけます。</div>
+		<br>
+    <div class="text-muted">
+      　お気に入り登録・解除
+    </div>
+    <div class="text-muted">
+      　店舗予約
+    </div>
+    <div class="text-muted">
+      　レビュー投稿
+    </div>
+		<br>
+
 		<div class="card">
 				<div class="card-body">
 						<form action="{{route('stripe.afterpay')}}" method="post" id="payment-form">

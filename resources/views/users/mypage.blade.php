@@ -46,7 +46,8 @@
 
     @else
     {{-- 有効でないサブスクリプションの場合 --}}
-    <div class="emphasize">プレミアム会員になると、下記の機能をお使いいただけます。</div>
+    <br>
+    <div class="emphasize" style="max-width: 500px;">プレミアム会員になると、下記の機能をお使いいただけます。</div>
     <div class="text-muted">
       　お気に入り登録・解除
     </div>
@@ -56,10 +57,10 @@
     <div class="text-muted">
       　レビュー投稿
     </div>
+    <br>
     <div>
       <a href="{{route('stripe.subscription')}}">プレミアムプランに登録する</a>
     </div>
-
     @endif
 
     <div>
