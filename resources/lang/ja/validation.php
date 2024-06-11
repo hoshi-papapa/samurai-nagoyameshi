@@ -120,6 +120,14 @@ return [
         ],
     ],
 
-    'attributes' => [],
+    'attributes' => [
+        'name' => '名前',
+        'nickname' => 'ニックネーム',
+        'phone_number' => '電話番号',
+        'email' => 'メールアドレス',
+        'occupation' => '職業',
+        'age' => '年齢',
+        'password' => 'パスワード',
+    ],
 
 ];

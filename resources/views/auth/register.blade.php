@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <!-- バリデーションエラーがある場合は表示 -->
+    {{-- <!-- バリデーションエラーがある場合は表示 -->
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -8,7 +8,7 @@
                 @endforeach
             </ul>
         </div>
-    @endif
+    @endif --}}
 
     <form method="POST" action="{{ route('register') }}">
         @csrf
@@ -44,14 +44,14 @@
         <!-- 職業 -->
         <div class="mb-4">
             <x-input-label for="occupation" :value="__('職業')" />
-            <x-text-input id="occupation" class="block mt-1 w-full" type="text" name="occupation" :value="old('occupation')" required autofocus autocomplete="occupation" />
+            <x-text-input id="occupation" class="block mt-1 w-full" type="text" name="occupation" :value="old('occupation')" autofocus autocomplete="occupation" />
             <x-input-error :messages="$errors->get('occupation')" class="mt-2" />
         </div>
 
         <!-- 年齢 -->
         <div class="mb-4">
             <x-input-label for="age" :value="__('年齢')" />
-            <x-text-input id="age" class="block mt-1 w-full" type="number" name="age" :value="old('age')" required autofocus autocomplete="age" />
+            <x-text-input id="age" class="block mt-1 w-full" type="number" name="age" :value="old('age')" autofocus autocomplete="age" />
             <x-input-error :messages="$errors->get('age')" class="mt-2" />
         </div>       
 

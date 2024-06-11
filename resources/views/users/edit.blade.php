@@ -8,15 +8,15 @@
   <div class="d-flex justify-content-center py-3">
     <form method="POST" action="{{ route('mypage') }}" class="w-100" style="max-width: 600px;">
       @csrf
-      <input type="hidden" name="_method" value="PUT">
+      @method('PUT')
       
       <div class="form-group row justify-content-center">
         <label for="name" class="col-md-4 col-form-label text-md-right">氏名</label>
         <div class="col-md-6">
-          <input id="name" type="text" class="form-control" name="name" value="{{ $user->name }}" required autocomplete="name" autofocus placeholder="侍 太郎" style="max-width: 300px;">
+          <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name', $user->name) }}" required autocomplete="name" autofocus placeholder="侍 太郎" style="max-width: 300px;">
           @error('name')
           <span class="invalid-feedback" role="alert">
-            <strong>氏名を入力してください</strong>
+            <strong>{{ $message }}</strong>
           </span>
           @enderror
         </div>
@@ -26,10 +26,10 @@
       <div class="form-group row justify-content-center">
         <label for="nickname" class="col-md-4 col-form-label text-md-right">ニックネーム</label>
         <div class="col-md-6">
-          <input id="nickname" type="text" class="form-control" name="nickname" value="{{ $user->nickname }}" required autocomplete="nickname" autofocus placeholder="さむたろう" style="max-width: 300px;">
+          <input id="nickname" type="text" class="form-control @error('nickname') is-invalid @enderror" name="nickname" value="{{ old('nickname', $user->nickname) }}" autocomplete="nickname" autofocus placeholder="さむたろう" style="max-width: 300px;">
           @error('nickname')
           <span class="invalid-feedback" role="alert">
-            <strong>ニックネームを入力してください</strong>
+            <strong>{{ $message }}</strong>
           </span>
           @enderror
         </div>
@@ -39,10 +39,10 @@
       <div class="form-group row justify-content-center">
         <label for="phone_number" class="col-md-4 col-form-label text-md-right">電話番号</label>
         <div class="col-md-6">
-          <input id="phone_number" type="text" class="form-control" name="phone_number" value="{{ $user->phone_number }}" required autocomplete="phone_number" autofocus placeholder="01-2345-6789" style="max-width: 300px;">
+          <input id="phone_number" type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number', $user->phone_number) }}" autocomplete="phone_number" autofocus placeholder="01-2345-6789" style="max-width: 300px;">
           @error('phone_number')
           <span class="invalid-feedback" role="alert">
-            <strong>電話番号を入力してください</strong>
+            <strong>{{ $message }}</strong>
           </span>
           @enderror
         </div>
@@ -52,10 +52,10 @@
       <div class="form-group row justify-content-center">
         <label for="email" class="col-md-4 col-form-label text-md-right">メールアドレス</label>
         <div class="col-md-6">
-          <input id="email" type="text" class="form-control" name="email" value="{{ $user->email }}" required autocomplete="email" autofocus placeholder="taro@example.com" style="max-width: 300px;">
+          <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email', $user->email) }}" required autocomplete="email" autofocus placeholder="taro@example.com" style="max-width: 300px;">
           @error('email')
           <span class="invalid-feedback" role="alert">
-            <strong>メールアドレスを入力してください</strong>
+            <strong>{{ $message }}</strong>
           </span>
           @enderror
         </div>
@@ -65,10 +65,10 @@
       <div class="form-group row justify-content-center">
         <label for="occupation" class="col-md-4 col-form-label text-md-right">職業</label>
         <div class="col-md-6">
-          <input id="occupation" type="text" class="form-control" name="occupation" value="{{ $user->occupation }}" required autocomplete="occupation" autofocus placeholder="宇宙飛行士" style="max-width: 300px;">
+          <input id="occupation" type="text" class="form-control @error('occupation') is-invalid @enderror" name="occupation" value="{{ old('occupation', $user->occupation) }}" autocomplete="occupation" autofocus placeholder="宇宙飛行士" style="max-width: 300px;">
           @error('occupation')
           <span class="invalid-feedback" role="alert">
-            <strong>職業を入力してください</strong>
+            <strong>{{ $message }}</strong>
           </span>
           @enderror
         </div>
@@ -78,10 +78,10 @@
       <div class="form-group row justify-content-center">
         <label for="age" class="col-md-4 col-form-label text-md-right">年齢</label>
         <div class="col-md-6">
-          <input id="age" type="text" class="form-control" name="age" value="{{ $user->age }}" required autocomplete="age" autofocus placeholder="20" style="max-width: 300px;">
+          <input id="age" type="text" class="form-control @error('age') is-invalid @enderror" name="age" value="{{ old('age', $user->age) }}" autocomplete="age" autofocus placeholder="20" style="max-width: 300px;">
           @error('age')
           <span class="invalid-feedback" role="alert">
-            <strong>年齢を入力してください</strong>
+            <strong>{{ $message }}</strong>
           </span>
           @enderror
         </div>
@@ -101,7 +101,7 @@
 
   <form method="POST" action="{{ route('mypage.destroy') }}">
     @csrf
-    <input type="hidden" name="_method" value="DELETE">
+    @method('DELETE')
     <div class="container mt-5">
       <div class="d-flex justify-content-end">
           <div class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#delete-user-confirm-modal">退会する</div>
@@ -131,4 +131,3 @@
 </div>
 
 @endsection
-      

@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
 
 class UserController extends Controller
 {
@@ -25,6 +26,7 @@ class UserController extends Controller
 
         return view('users.mypage', compact('user', 'latestSubscription'));
     }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -49,13 +51,25 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        $user->name = $request->input('name') ? $request->input('name') : $user->name;
-        $user->nickname = $request->input('nickname') ? $request->input('nickname') : $user->nickname;
-        $user->phone_number = $request->input('phone_number') ? $request->input('phone_number') : $user->phone_number;
-        $user->email = $request->input('email') ? $request->input('email') : $user->email;
-        $user->occupation = $request->input('occupation') ? $request->input('occupation') : $user->occupation;
-        $user->age = $request->input('age') ? $request->input('age') : $user->age;
-        $user->update();
+        // バリデーションルールを定義
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'nickname' => ['nullable', 'string', 'max:255'],
+            'phone_number' => ['nullable', 'string', 'max:15'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id], // 他のユーザーのメールアドレスと重複しない
+            'occupation' => ['nullable', 'string', 'max:255'],
+            'age' => ['nullable', 'integer', 'min:0', 'max:150'],
+        ]);
+
+        // バリデーションが通ったら、ユーザー情報を更新
+        $user->name = $request->input('name');
+        $user->nickname = $request->input('nickname');
+        $user->phone_number = $request->input('phone_number');
+        $user->email = $request->input('email');
+        $user->occupation = $request->input('occupation');
+        $user->age = $request->input('age');
+
+        $user->save();
 
         return to_route('mypage');
     }

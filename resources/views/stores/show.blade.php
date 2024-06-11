@@ -15,7 +15,7 @@
     <hr>
 
     <div class="row">
-        <div class="col-8">
+        <div class="col-md-8">
             <div class="card">
                 @if ($store->image)
                     <img src="{{ asset($store->image) }}" class="card-img-top">
@@ -56,7 +56,7 @@
             </div>
         </div>
 
-        <div class="col-4">
+        <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
                     <div class="text-center d-grid gap-2 col-8 mx-auto mb-3">
@@ -124,7 +124,7 @@
     <br>
     <hr>
     <div class="container">
-        <div class="row align-items-center mb-3">
+        <div class="row align-items-center mb-2">
             <div class="col-auto">
                 <h3 style="margin-right: 1.5rem;">みんなのレビュー</h3>
             </div>
@@ -147,7 +147,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ $review->user->name }}</h5>
                     <div style="display: flex; align-items: center;" class="mb-1">
-                        <div class="star-rating" data-rate={{$review->rating}}></div>
+                        <div class="star-rating" data-rate="{{$review->rating}}""></div>
                         <div class="rating">　{{ number_format(round($review->rating, 1), 1) }}</div>
                     </div>
                     <p class="card-text">{{$review->comment}}</p>
