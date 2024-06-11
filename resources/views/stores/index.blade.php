@@ -122,7 +122,7 @@
                                 @if ($store->average_review)
                                     <div style="display: flex; align-items: center;" class="mb-2">
                                         <div class="star-rating" data-rate={{ round($store->average_review * 2) /2 }}></div>
-                                        <div class="rating">　{{ number_format(round($store->average_review, 1), 1) }}</div>
+                                        <div class="rating" style="font-size: 1rem;">　{{ number_format(round($store->average_review, 1), 1) }}</div>
                                     </div>
                                 @else
                                     <div style="display: flex; align-items: center;" class="mb-2">
