@@ -49,6 +49,7 @@ body {
         color:  #ffc107;    
         overflow: hidden;
         width: calc(var(--rate) * 100%);
+        white-space: nowrap;
     }
 
     &[data-rate="0"]::after { --rate: 0; }
